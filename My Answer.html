@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>JS Drum Kit</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
 
@@ -58,24 +58,32 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
-  function removeTransition(e) {
-    if (e.propertyName !== 'transform') return;
-    e.target.classList.remove('playing');
+window.addEventListener('keydown', playSound);
+
+// playSound - plays sound when appropiate key is played
+function playSound(e){
+  const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+  const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+  if(!audio){
+    return; // stop the function from running.
   }
+  audio.currentTime = 0; // rewind to the start.
+  audio.play();
+  key.classList.add("playing");
+}
 
-  function playSound(e) {
-    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
-    const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
-    if (!audio) return;
+// Remove Transition function - removes playing class from the key divs 
+function removeTransition(e) {
+  if (e.propertyName !== 'transform') return;
+  console.log(this.classList.remove('playing'));
+}
 
-    key.classList.add('playing');
-    audio.currentTime = 0;
-    audio.play();
-  }
+// Get all keys divs in document.
+const keys = document.querySelectorAll('.key');
 
-  const keys = Array.from(document.querySelectorAll('.key'));
-  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
-  window.addEventListener('keydown', playSound);
+// Add an EventListener of transitionend event to all key divs
+keys.forEach(key => key.addEventListener('transitionend', removeTransition))
+
 </script>
 
 

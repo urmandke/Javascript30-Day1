@@ -1,4 +1,4 @@
 # Javascript30-Day1
-JavaScript Drum kit
+JavaScript Drum kit Challenge
 
-Main working file - index-START.html
+Please open index-START.html in any modern browser to run.
